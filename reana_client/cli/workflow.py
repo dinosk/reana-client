@@ -364,6 +364,7 @@ def workflow_status(ctx, organization, workflow, _filter, output_format,
                             current_command = current_command[
                                 current_command.
                                 index(';') + 2:-2]
+                        current_command = current_command[:20] + '...'
                     else:
                         if 'command' in headers:
                             headers.remove('command')
@@ -381,7 +382,7 @@ def workflow_status(ctx, organization, workflow, _filter, output_format,
 
                     if verbose:
                         data[-1] += [analysis.get(k) for k in verbose_headers]
-            else:
+            elif response:
                 name, run_number = get_workflow_name_and_run_number(
                     response['name'])
                 current_command = response['progress'].get('current_command')
@@ -390,6 +391,7 @@ def workflow_status(ctx, organization, workflow, _filter, output_format,
                         current_command = current_command[
                             current_command.
                             index(';') + 2:-2]
+                    current_command = current_command[:20] + '...'
                 else:
                     if 'command' in headers:
                         headers.remove('command')
